@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestSmart - Your Investment Partner</title>
+    <link href="https://cdn.jsdelivr.net/npm/chart.js" rel="stylesheet">
+    <style>
+        /* Reset */
+        * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+
+        body { background-color: #f4f4f9; color: #333; }
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo { font-size: 1.5em; font-weight: bold; }
+
+        header nav a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        header .selects select {
+            margin-left: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .hero {
+            position: relative;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            background: #111827;
+        }
+
+        .hero canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 { font-size: 3em; margin-bottom: 20px; }
+        .hero p { font-size: 1.2em; margin-bottom: 30px; }
+
+        .btn {
+            padding: 12px 30px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .plans {
+            display: flex;
+            justify-content: space-around;
+            padding: 50px;
+            flex-wrap: wrap;
+        }
+
+        .plan {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 300px;
+            margin: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .plan:hover { transform: translateY(-10px); }
+
+        .plan h2 { margin-bottom: 20px; color: #1f2937; }
+        .plan p { margin-bottom: 20px; }
+        .plan .price { font-size: 2em; color: #3b82f6; margin-bottom: 20px; }
+
+        .testimonials, .contact, footer {
+            padding: 50px;
+            text-align: center;
+        }
+
+        .testimonial {
+            margin: 20px auto;
+            width: 60%;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-style: italic;
+        }
+
+        .contact form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact input, .contact textarea {
+            width: 50%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        footer {
+            background: #1f2937;
+            color: white;
+        }
+
+        footer p { margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">InvestSmart</div>
+    <nav>
+        <a href="#plans">Plans</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <div class="selects">
+        <select>
+            <option>Country</option>
+            <option>USA</option>
+            <option>UK</option>
+            <option>Nigeria</option>
+        </select>
+        <select>
+            <option>Language</option>
+            <option>English</option>
+            <option>Spanish</option>
+            <option>French</option>
+        </select>
+    </div>
+</header>
+
+<section class="hero">
+    <canvas id="candlestickChart"></canvas>
+    <div class="hero-content">
+        <h1>Grow Your Wealth with Smart Investments</h1>
+        <p>Join thousands of investors making smarter decisions every day.</p>
+        <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+    </div>
+</section>
+
+<section id="plans" class="plans">
+    <div class="plan">
+        <h2>Basic Plan</h2>
+        <p>Perfect for new investors starting out.</p>
+        <div class="price">$500</div>
+        <button class="btn">Invest Now</button>
+    </div>
+    <div class="plan">
+        <h2>Standard Plan</h2>
+        <p>For experienced investors seeking growth.</p>
+        <div class="price">$2,500</div>
+        <button class="btn">Invest Now</button>
+    </div>
+    <div class="plan">
+        <h2>Premium Plan</h2>
+        <p>High returns for serious investors.</p>
+        <div class="price">$10,000</div>
+        <button class="btn">Invest Now</button>
+    </div>
+</section>
+
+<section id="testimonials" class="testimonials">
+    <h2>What Our Clients Say</h2>
+    <div class="testimonial">
+        "InvestSmart helped me grow my portfolio faster than I imagined. Highly recommended!"
+    </div>
+    <div class="testimonial">
+        "Excellent service and very reliable platform. My returns are consistent."
+    </div>
+</section>
+
+<section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <form>
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button class="btn" type="submit">Send Message</button>
+    </form>
+</section>
+
+<footer>
+    <p>&copy; 2025 InvestSmart. All Rights Reserved.</p>
+</footer>
+
+<!-- Candlestick Chart JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('candlestickChart').getContext('2d');
+    const candlestickChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            datasets: [{
+                label: 'Stock Price',
+                data: [150, 170, 160, 180, 175, 190, 200],
+                backgroundColor: '#3b82f6'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false } },
+                y: { grid: { color: 'rgba(255,255,255,0.2)' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

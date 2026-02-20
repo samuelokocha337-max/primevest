@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>InvestPro — Investment Platform</title>
+  <style>
+    :root{
+      --accent:#246BFD;
+      --bg:#0b1020;
+      --card:#0f1724;
+      --muted:#6881c5;
+      --glass: rgba(255,255,255,0.04);
+    }
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:var(--bg);color:#787e87}
+    .wrap{min-height:100%;display:flex;flex-direction:column}
+    header{position:relative;z-index:10;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:42px;height:42px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#7b61ff);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:20px}
+    nav{display:flex;gap:16px;align-items:center}
+    .btn{background:var(--accent);color:white;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;font-size:14px;transition:0.2s}
+    .btn:hover{opacity:0.9;transform:translateY(-1px)}
+    .btn-outline{background:transparent;border:1px solid var(--accent);color:var(--accent)}
+
+    main{flex:1;position:relative;overflow:hidden}
+    .hero{position:relative;height:480px;display:flex;align-items:center;padding:36px 48px}
+    #bgChart{position:absolute;inset:0;z-index:0;opacity:0.12;pointer-events:none}
+    .hero-inner{position:relative;z-index:5;display:flex;gap:32px;align-items:center;width:100%;flex-wrap:wrap}
+    .left{flex:1;min-width:320px}
+    .right{width:380px;min-width:320px}
+    .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02);backdrop-filter:blur(10px)}
+
+    .testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:40px 0;opacity:1;transition:opacity 0.8s ease}
+    .testimonials.fade{opacity:0}
+    .testimonial{padding:22px;border-radius:12px;background:var(--card);border-left:4px solid var(--accent);font-style:italic;color:#ccc}
+    .testimonial p{margin:0 0 14px 0;line-height:1.5}
+    .testimonial .author{font-weight:bold;color:white;font-style:normal;margin-top:10px;font-size:15px}
+
+    .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin:40px 0}
+    .plan{padding:24px;border-radius:12px;background:var(--card);border:1px solid rgba(36,107,253,0.15);text-align:center;transition:transform 0.25s, box-shadow 0.25s}
+    .plan:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(36,107,253,0.2)}
+    .plan h3{font-size:22px;margin:0 0 8px;color:white}
+    .plan p{color:var(--muted);margin:0 0 16px}
+    .plan .min{font-size:18px;font-weight:600;color:var(--accent)}
+    .plan .btn{margin-top:16px;width:100%}
+
+    footer{padding:24px 28px;color:var(--muted);font-size:14px;text-align:center;border-top:1px solid rgba(255,255,255,0.03)}
+
+    @media (max-width:960px){
+      .hero{height:auto;padding:32px 24px}
+      .hero-inner{flex-direction:column;gap:40px}
+      .right{width:100%}
+    }
+    .sam{
+        padding: 2rem;
+        margin-right: 40px;
+        text-align: center;
+        color: antiquewhite;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">PV</div>
+        <div>
+          <div style="font-weight:700;color:white">PrimeVest</div>
+          <div style="font-size:12px;color:var(--muted)">Smart investing made simple</div>
+        </div>
+      </div>
+      <nav id="authNav"></nav>
+    </header>
+
+    <main>
+      <div id="bgChart"></div>
+
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="left">
+            <h1 style="font-size:48px;color:white;line-height:1.15;margin:0 0 20px">Grow Your Wealth<br>With Intelligent Plans</h1>
+            <p style="color:var(--muted);font-size:19px;max-width:680px;margin:0 0 32px">
+              Select your preferred strategy, define your risk tolerance, and let our automated systems manage your investments 24/7. Real-time data, institutional-grade security, zero hidden fees.
+            </p>
+
+            <div class="card" style="display:inline-flex;gap:28px;padding:24px;margin-bottom:40px">
+              <div>
+                <div style="font-size:15px;color:var(--muted)">Currency</div>
+                <div style="font-weight:700;font-size:24px;color:white">USD</div>
+              </div>
+              <div>
+                <div style="font-size:15px;color:var(--muted)">Your Balance</div>
+                <div id="balance" style="font-weight:700;font-size:24px;color:white">$0.00</div>
+              </div>
+            </div>
+
+            <!-- Testimonials (will be randomized) -->
+            <div class="testimonials" id="testimonialsContainer"></div>
+          </div>
+
+          <div class="right">
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                <div>
+                  <div style="font-size:14px;color:var(--muted)">Live Price</div>
+                  <div style="font-weight:700;font-size:24px;color:white" id="livePrice">--</div>
+                </div>
+                <select id="pairSelect" style="padding:10px 12px;border-radius:8px;background:#1a2338;border:none;color:white;font-size:14px">
+                  <option>BTC/USD</option>
+                  <option>ETH/USD</option>
+                </select>
+              </div>
+              <div id="miniChart" style="height:220px;margin:16px 0"></div>
+              <div style="display:flex;gap:10px">
+                <input id="amt" placeholder="Enter amount ($)" style="flex:1;padding:12px;border-radius:8px;background:#1a2338;border:none;color:white;font-size:15px">
+                <button class="btn" id="quickInvest" style="padding:12px 24px">Invest</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Added Plan List Section -->
+      <section style="padding:60px 48px;background:linear-gradient(to bottom, rgba(36,107,253,0.04), transparent)">
+        <h2 style="text-align:center;font-size:38px;color:white;margin:0 0 48px">Choose Your Investment Plan</h2>
+        <div class="plans">
+          <div class="plan">
+            <h3>Starter</h3>
+            <p>Low risk — target 6-9% annual return</p>
+            <div class="min">Min: $150</div>
+            <button class="btn investBtn">Invest Now</button>
+          </div>
+          <div class="plan">
+            <h3>Growth</h3>
+            <p>Balanced — target 12-17% annual return</p>
+            <div class="min">Min: $500</div>
+            <button class="btn investBtn">Invest Now</button>
+          </div>
+          <div class="plan">
+            <h3>Pro</h3>
+            <p>Advanced — target 20%+ annual return</p>
+            <div class="min">Min: $1,500</div>
+            <button class="btn investBtn">Invest Now</button>
+          </div>
+        </div>
+      </section>
+
+      <a href="support.html" style="position:fixed;bottom:24px;right:24px;padding:14px 24px;background:#0ea5a5;color:white;border-radius:50px;text-decoration:none;display:flex;align-items:center;gap:12px;z-index:100;box-shadow:0 6px 24px rgba(0,0,0,0.4)">
+        <svg width="22" height="22" fill="white" viewBox="0 0 24 24">
+          <path d="M12 3C6.48 3 2 6.92 2 11.5c0 2.27 1.06 4.32 2.82 5.93L4 21l3.83-1.78c1.21.33 2.51.51 3.88.51 5.52 0 10-3.92 10-8.5S17.52 3 12 3z"/>
+        </svg>
+        Live Support
+      </a>
+    </main>
+<div class="sam">
+    <h1>About Us</h1>
+    <p>
+        At [Your Platform Name], we make wealth building simple, secure, and accessible to everyone — anywhere in the world, with any starting amount.<br><br>
+        Founded in 2022 by experienced finance professionals, we created this platform to break down barriers: high fees, complexity, and exclusivity in traditional investing. Our goal? Empower everyday investors with smart, low-cost tools for long-term growth.<br><br>
+        Today, thousands of users worldwide invest confidently in global stocks, ETFs, mutual funds, fixed-income, and diversified portfolios through our easy-to-use app and web platform.<br><br>
+        Backed by CFA charterholders, seasoned portfolio managers, and fintech experts, we deliver transparent, evidence-based strategies — no hidden fees, real-time tracking, and strong security via trusted global partners.<br><br>
+        We focus on disciplined investing, not shortcuts. Build your future steadily: retirement, education, or financial freedom.<br><br>
+        Join investors worldwide taking control. Start small, grow smart.<br><br>
+        Open your account in minutes — your tomorrow starts today.
+    </p>
+</div>
+
+ <footer>
+    © 2022 PrimeVest • Built with ❤️ for smart investors
+  </footer>
+</div>
+  <!-- Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+
+  <script>
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyAvVtoG48BZUzZHGrAjphIngIJmTiLcg3Q",
+      authDomain: "investpro-eb5d8.firebaseapp.com",
+      projectId: "investpro-eb5d8",
+      storageBucket: "investpro-eb5d8.firebasestorage.app",
+      messagingSenderId: "182699011262",
+      appId: "1:182699011262:web:43b1d005bd57e6544482ef"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const authNav = document.getElementById('authNav');
+
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        authNav.innerHTML = `
+          <div style="display:flex;gap:12px;align-items:center">
+            <span style="color:white;font-size:14px">Hi, ${user.displayName || user.email.split('@')[0]}!</span>
+            <button class="btn" onclick="window.location.href='dashboard.html'">Dashboard</button>
+            <button class="btn-outline" onclick="firebase.auth().signOut()">Logout</button>
+          </div>
+        `;
+      } else {
+        authNav.innerHTML = `
+          <div style="display:flex;gap:10px;align-items:center">
+            <button class="btn" onclick="window.location.href='create.html'">Sign Up</button>
+            <button class="btn-outline" onclick="window.location.href='login.html'">Login</button>
+          </div>
+        `;
+      }
+    });
+
+
+    // ── Testimonials ───────────────────────────────────────────────
+    const testimonialsData = [
+      { text: "Started small with $250 and already seeing consistent monthly returns. The automation is a real time-saver — love it!", author: "Samuel E., Port Harcourt" },
+      { text: "Best decision I made this year. Up over 13% in just 4 months with almost zero effort. Highly recommend PrimeVest.", author: "Chioma A., Lagos" },
+      { text: "The platform is super clean and the live prices actually update in real time. My portfolio is growing faster than my savings account ever did.", author: "Tunde O., Abuja" },
+      { text: "As a beginner I was nervous, but the system is beginner-friendly yet powerful. Doubled my starting amount in under 7 months.", author: "Ngozi B., Enugu" },
+      { text: "Secure, transparent, and actually profitable. Finally found something better than traditional banks!", author: "Emeka C., Benin City" },
+      { text: "The quick invest feature is brilliant — I added funds on mobile and saw returns the next day.", author: "Fatima S., Kano" },
+      { text: "Customer support responded in minutes when I had a question. Professional team behind this.", author: "David U., Ibadan" },
+      { text: "From $800 to $1,150 in 5 months. Steady gains without me having to watch charts all day.", author: "Amina K., Kaduna" }
+    ];
+
+    const container = document.getElementById('testimonialsContainer');
+
+    function renderRandomTestimonials() {
+      container.classList.add('fade');
+      setTimeout(() => {
+        const shuffled = [...testimonialsData].sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 4);
+
+        container.innerHTML = selected.map(t => `
+          <div class="testimonial card">
+            <p>"${t.text}"</p>
+            <div class="author">— ${t.author}</div>
+          </div>
+        `).join('');
+        container.classList.remove('fade');
+      }, 800);
+    }
+
+    // Initial render + rotate every 8 seconds
+    renderRandomTestimonials();
+    setInterval(renderRandomTestimonials, 8000);
+
+    // ── Charts (fixed for v5 API) ────────────────────────────────────
+    window.addEventListener('load', () => {
+      if (typeof LightweightCharts === 'undefined') {
+        console.error('Lightweight Charts failed to load');
+        return;
+      }
+
+      // Background Chart
+      const bgChart = LightweightCharts.createChart(document.getElementById('bgChart'), {
+        width: window.innerWidth,
+        height: 480,
+        layout: { background: { type: 'solid', color: 'transparent' }, textColor: '#666' },
+        grid: { vertLines: { visible: false }, horzLines: { visible: false } },
+        crosshair: { mode: LightweightCharts.CrosshairMode.Hidden },
+        rightPriceScale: { visible: false },
+        timeScale: { visible: false },
+      });
+
+      const candleSeries = bgChart.addSeries(LightweightCharts.CandlestickSeries);
+      candleSeries.setData(generateCandles(180, 42000));
+
+      // Mini Chart
+      const miniChart = LightweightCharts.createChart(document.getElementById('miniChart'), {
+        width: 360,
+        height: 220,
+        layout: { background: { type: 'solid', color: 'transparent' }, textColor: '#888' },
+        grid: { vertLines: { visible: false }, horzLines: { visible: false } },
+        rightPriceScale: { visible: false },
+        timeScale: { visible: false },
+      });
+
+      const areaSeries = miniChart.addSeries(LightweightCharts.AreaSeries, {
+        topColor: 'rgba(36, 107, 253, 0.5)',
+        bottomColor: 'rgba(36, 107, 253, 0.1)',
+        lineColor: '#246BFD',
+      });
+      areaSeries.setData(generateCandles(60, 42000).map(c => ({ time: c.time, value: c.close })));
+
+      // Resize
+      window.addEventListener('resize', () => {
+        bgChart.applyOptions({ width: window.innerWidth });
+        miniChart.applyOptions({ width: document.getElementById('miniChart').clientWidth });
+      });
+    });
+
+    function generateCandles(count, startPrice) {
+      const data = [];
+      let time = Math.floor(Date.now() / 1000) - count * 3600;
+      let price = startPrice;
+      for (let i = 0; i < count; i++) {
+        const open = price;
+        const close = price * (1 + (Math.random() - 0.5) * 0.02);
+        const high = Math.max(open, close) * (1 + Math.random() * 0.01);
+        const low = Math.min(open, close) * (1 - Math.random() * 0.01);
+        data.push({ time: time + i * 3600, open, high, low, close });
+        price = close;
+      }
+      return data;
+    }
+
+    // Simulate live price
+    setInterval(() => {
+      const change = (Math.random() - 0.5) * 120;
+      const newPrice = (42000 + change).toFixed(2);
+      document.getElementById('livePrice').textContent = '$' + newPrice;
+    }, 4000);
+
+    // Quick Invest
+    document.getElementById('quickInvest').onclick = () => {
+      const amt = document.getElementById('amt').value.trim();
+      if (!amt || isNaN(amt) || Number(amt) <= 0) return alert("Please enter a valid amount");
+      alert(`Investing $${Number(amt).toLocaleString()}... (Demo mode)`);
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Admin — Manage Users, Balances, KYC, Deposits</title>
+<style>
+  :root{
+    --bg:#0f1724; --panel:#0b1220; --muted:#94a3b8; --accent:#2563eb;
+    --card:#0b1226; --glass: rgba(255,255,255,0.03);
+    --success:#10b981; --danger:#ef4444; --warn:#f59e0b;
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:
+    linear-gradient(180deg,#071023 0%, #071a2b 60%); color:#e6eef8}
+  header{height:64px;display:flex;align-items:center;gap:20px;padding:0 20px;background:linear-gradient(90deg,var(--panel),#071226);}
+  .brand{font-weight:700;font-size:18px;color:var(--accent)}
+  .top-actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+  .btn.small{padding:6px 8px;font-size:13px}
+  .layout{display:flex;height:calc(100vh - 64px);overflow:hidden}
+  .sidebar{width:260px;background:linear-gradient(180deg,#071229,#071226);padding:18px;border-right:1px solid rgba(255,255,255,0.02)}
+  .sidebar h3{color:var(--muted);margin:0 0 10px 0;font-weight:600}
+  .nav a{display:block;color:#cfe6ff;padding:10px 12px;border-radius:8px;text-decoration:none;margin-bottom:6px}
+  .nav a:hover{background:rgba(255,255,255,0.02)}
+  .main{flex:1;padding:22px;overflow:auto}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:18px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02)}
+  .card h4{margin:0 0 6px 0;color:#cfe6ff}
+  .card p{margin:0;font-weight:700;font-size:20px}
+  .panel{background:var(--card);padding:14px;border-radius:12px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.02)}
+  .flex{display:flex;gap:12px;align-items:center}
+  .searchbar{display:flex;gap:8px;align-items:center}
+  .searchbar input{padding:10px;border-radius:10px;border:none;background:var(--glass);color:inherit;min-width:260px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{padding:10px 12px;border-bottom:1px dashed rgba(255,255,255,0.03);text-align:left}
+  th{color:var(--muted);font-weight:600;font-size:13px}
+  tbody tr:hover{background:rgba(255,255,255,0.01)}
+  .badge{padding:6px 8px;border-radius:8px;font-weight:700;font-size:12px}
+  .badge.success{background:rgba(16,185,129,0.12);color:var(--success)}
+  .badge.pending{background:rgba(245,158,11,0.08);color:var(--warn)}
+  .badge.fail{background:rgba(239,68,68,0.08);color:var(--danger)}
+  .receipt-img{width:80px;height:80px;object-fit:cover;border-radius:8px;cursor:pointer}
+  .kyc-img{width:200px;height:auto;border-radius:8px;margin:10px 0;cursor:pointer}
+  .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;z-index:60}
+  .modal{width:760px;background:linear-gradient(180deg,#051028,#071226);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 12px 40px rgba(2,6,23,0.8)}
+  .row{display:flex;gap:12px}
+  .col{flex:1}
+  label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
+  input[type="text"], input[type="email"], input[type="number"], select, textarea{width:100%;padding:10px;border-radius:8px;border:none;background:rgba(255,255,255,0.02);color:inherit}
+  textarea{min-height:80px;resize:vertical}
+  .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+  .link{color:var(--accent);cursor:pointer;text-decoration:underline}
+  .small-muted{font-size:13px;color:var(--muted)}
+  footer{color:var(--muted);font-size:13px;margin-top:16px;text-align:center}
+  @media (max-width:900px){
+    .modal{width:92%}
+    .sidebar{display:none}
+    .main{padding:12px}
+    .cards{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">PrimeVest — Admin</div>
+  <div class="top-actions">
+    <div class="searchbar">
+      <input id="globalSearch" placeholder="Search users (email)"/>
+      <button class="btn small" onclick="window.location.reload()">Refresh</button>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Admin Menu</h3>
+    <nav class="nav">
+      <a href="#" onclick="showSection('dashboard')">Dashboard</a>
+      <a href="#" onclick="showSection('deposits')">Deposits</a>
+      <a href="#" onclick="showSection('withdrawals')">Withdrawals</a>
+      <a href="#" onclick="showSection('kyc')">KYC</a>
+    </nav>
+    <div style="margin-top:18px;color:var(--muted);font-size:13px">Logged in as admin</div>
+  </aside>
+
+  <main class="main">
+    <!-- Dashboard -->
+    <section id="dashboard">
+      <div class="cards">
+        <div class="card"><h4>Total Users</h4><p id="statUsers">—</p></div>
+        <div class="card"><h4>Total Deposits</h4><p id="statDeposits">—</p></div>
+        <div class="card"><h4>Pending Deposits</h4><p id="statPending">—</p></div>
+        <div class="card"><h4>Processed Today</h4><p id="statToday">—</p></div>
+      </div>
+    </section>
+
+    <!-- Deposits -->
+    <section id="deposits" style="display:none">
+      <div class="panel">
+        <h3 style="margin:0">Deposit Requests</h3>
+        <div style="margin-top:12px">
+          <table id="depositsTable">
+            <thead><tr><th>User</th><th>Amount</th><th>Coin</th><th>Date</th><th>Receipt</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- KYC -->
+    <section id="kyc" style="display:none">
+      <div class="panel">
+        <h3 style="margin:0">KYC Verifications</h3>
+        <div style="margin-top:12px">
+          <table id="kycTable">
+            <thead><tr><th>User Email</th><th>Full Name</th><th>Submitted At</th><th>ID Document</th><th>Selfie with ID</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Withdrawals -->
+    <section id="withdrawals" style="display:none">
+      <div class="panel">
+        <h3 style="margin:0">Withdrawal Requests</h3>
+        <div style="margin-top:12px">
+          <table id="withdrawalsTable">
+            <thead><tr><th>User</th><th>Amount</th><th>Coin</th><th>Wallet Address</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section id="settings" style="display:none"><div class="panel"><h3>Settings</h3><p>Coming soon...</p></div></section>
+  </main>
+</div>
+
+<!-- Modal -->
+<div id="modalBack" class="modal-backdrop">
+  <div class="modal" role="dialog">
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyAvVtoG48BZUzZHGrAjphIngIJmTiLcg3Q",
+        authDomain: "investpro-eb5d8.firebaseapp.com",
+        projectId: "investpro-eb5d8",
+        storageBucket: "investpro-eb5d8.appspot.com",
+        messagingSenderId: "182699011262",
+        appId: "1:182699011262:web:43b1d005bd57e6544482ef"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Any logged-in user can access this admin panel
+    auth.onAuthStateChanged(user => {
+        if (!user) {
+            alert("Please login first");
+            window.location.href = 'login.html';
+        } else {
+            loadDashboardStats();
+            showSection('deposits');
+            loadDeposits();
+        }
+    });
+
+    async function loadDashboardStats() {
+        const depositsSnap = await db.collection('deposits').get();
+        const pending = depositsSnap.docs.filter(d => d.data().status === 'pending').length;
+        const today = new Date().toDateString();
+        const todayCount = depositsSnap.docs.filter(d => 
+            d.data().timestamp && d.data().timestamp.toDate().toDateString() === today
+        ).length;
+
+        document.getElementById('statUsers').textContent = '—';
+        document.getElementById('statDeposits').textContent = `$${depositsSnap.size}`;
+        document.getElementById('statPending').textContent = pending;
+        document.getElementById('statToday').textContent = todayCount;
+    }
+
+    async function loadDeposits() {
+        const snapshot = await db.collection('deposits')
+            .orderBy('timestamp', 'desc')
+            .get();
+
+        const tbody = document.querySelector('#depositsTable tbody');
+        tbody.innerHTML = '';
+
+        if (snapshot.empty) {
+            tbody.innerHTML = '<tr><td colspan="7" class="small-muted">No deposits found</td></tr>';
+            return;
+        }
+
+        snapshot.forEach(doc => {
+            const d = doc.data();
+            const statusClass = d.status === 'approved' ? 'success' : d.status === 'rejected' ? 'fail' : 'pending';
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${d.email || 'N/A'}</td>
+                <td>$${d.amount?.toFixed(2) || '0.00'}</td>
+                <td>${d.coin || 'N/A'}</td>
+                <td>${d.timestamp ? new Date(d.timestamp.toDate()).toLocaleString() : 'N/A'}</td>
+                <td>${d.receiptUrl ? `<img src="${d.receiptUrl}" class="receipt-img" onclick="window.open('${d.receiptUrl}', '_blank')">` : 'No receipt'}</td>
+                <td><span class="badge ${statusClass}">${(d.status || 'pending').toUpperCase()}</span></td>
+                <td>
+                    ${d.status === 'pending' ? `
+                        <button class="btn small" onclick="approveDeposit('${doc.id}', ${d.amount}, '${d.email}')">Approve</button>
+                        <button class="btn small ghost" onclick="rejectDeposit('${doc.id}', '${d.email}')">Reject</button>
+                    ` : '<small>Processed</small>'}
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    async function loadKYC() {
+        const snapshot = await db.collection('kyc')
+            .orderBy('submittedAt', 'desc')
+            .get();
+
+        const tbody = document.querySelector('#kycTable tbody');
+        tbody.innerHTML = '';
+
+        if (snapshot.empty) {
+            tbody.innerHTML = '<tr><td colspan="7" class="small-muted">No KYC submissions found</td></tr>';
+            return;
+        }
+
+        snapshot.forEach(doc => {
+            const d = doc.data();
+            const status = d.status || 'pending';
+            const statusClass = status === 'approved' ? 'success' : status === 'rejected' ? 'fail' : 'pending';
+            const submittedDate = d.submittedAt ? new Date(d.submittedAt.toDate()).toLocaleString() : 'N/A';
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${d.email || 'N/A'}</td>
+                <td>${d.fullName || 'N/A'}</td>
+                <td>${submittedDate}</td>
+                <td><img src="${d.idImage}" class="kyc-img" onclick="window.open('${d.idImage}', '_blank')"></td>
+                <td><img src="${d.selfieImage}" class="kyc-img" onclick="window.open('${d.selfieImage}', '_blank')"></td>
+                <td><span class="badge ${statusClass}">${status.toUpperCase()}</span></td>
+                <td>
+                    ${status === 'pending' ? `
+                        <button class="btn small" onclick="approveKYC('${doc.id}', '${d.email}')">Approve</button>
+                        <button class="btn small ghost" onclick="rejectKYC('${doc.id}', '${d.email}')">Reject</button>
+                    ` : '<small>Processed</small>'}
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    async function loadWithdrawals() {
+        const snapshot = await db.collection('withdrawals')
+            .orderBy('timestamp', 'desc')
+            .get();
+
+        const tbody = document.querySelector('#withdrawalsTable tbody');
+        tbody.innerHTML = '';
+
+        if (snapshot.empty) {
+            tbody.innerHTML = '<tr><td colspan="7" class="small-muted">No withdrawal requests found</td></tr>';
+            return;
+        }
+
+        snapshot.forEach(doc => {
+            const d = doc.data();
+            const status = d.status || 'pending';
+            const statusClass = status === 'approved' ? 'success' : status === 'rejected' ? 'fail' : 'pending';
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${d.email || 'N/A'}</td>
+                <td>$${d.amount?.toFixed(2) || '0.00'}</td>
+                <td>${d.coin || 'N/A'}</td>
+                <td style="word-break:break-all; max-width:200px;">${d.address || 'N/A'}</td>
+                <td>${d.timestamp ? new Date(d.timestamp.toDate()).toLocaleString() : 'N/A'}</td>
+                <td><span class="badge ${statusClass}">${status.toUpperCase()}</span></td>
+                <td>
+                    ${status === 'pending' ? `
+                        <button class="btn small" onclick="approveWithdrawal('${doc.id}', ${d.amount}, '${d.email}')">Approve</button>
+                        <button class="btn small ghost" onclick="rejectWithdrawal('${doc.id}', '${d.email}')">Reject</button>
+                    ` : '<small>Processed</small>'}
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    window.approveDeposit = async (docId, amount, email) => {
+        if (!confirm(`Approve deposit of $${amount} for ${email}?`)) return;
+
+        try {
+            await db.collection('deposits').doc(docId).update({
+                status: 'approved',
+                processedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                processedBy: auth.currentUser.email
+            });
+
+            // Credit user balance
+            const userRef = db.collection('users').doc(email);
+            await db.runTransaction(async (transaction) => {
+                const doc = await transaction.get(userRef);
+                if (!doc.exists) {
+                    transaction.set(userRef, { balance: amount });
+                } else {
+                    transaction.update(userRef, {
+                        balance: firebase.firestore.FieldValue.increment(amount)
+                    });
+                }
+            });
+
+            alert("Deposit approved and balance credited!");
+            loadDeposits();
+            loadDashboardStats();
+        } catch (err) {
+            console.error(err);
+            alert("Error approving deposit");
+        }
+    };
+
+    window.rejectDeposit = async (docId, email) => {
+        if (!confirm(`Reject deposit for ${email}?`)) return;
+
+        await db.collection('deposits').doc(docId).update({
+            status: 'rejected',
+            processedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            processedBy: auth.currentUser.email
+        });
+
+        alert("Deposit rejected");
+        loadDeposits();
+    };
+
+    window.approveKYC = async (docId, email) => {
+        if (!confirm(`Approve KYC for ${email}?`)) return;
+
+        await db.collection('kyc').doc(docId).update({
+            status: 'approved',
+            processedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            processedBy: auth.currentUser.email
+        });
+
+        alert("KYC approved!");
+        loadKYC();
+    };
+
+    window.rejectKYC = async (docId, email) => {
+        if (!confirm(`Reject KYC for ${email}?`)) return;
+
+        await db.collection('kyc').doc(docId).update({
+            status: 'rejected',
+            processedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            processedBy: auth.currentUser.email
+        });
+
+        alert("KYC rejected");
+        loadKYC();
+    };
+
+    window.approveWithdrawal = async (docId, amount, email) => {
+        if (!confirm(`Approve withdrawal of $${amount} for ${email}? This will deduct the amount from their balance.`)) return;
+
+        try {
+            await db.collection('withdrawals').doc(docId).update({
+                status: 'approved',
+                processedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                processedBy: auth.currentUser.email
+            });
+
+            // Deduct from user balance
+            const userRef = db.collection('users').doc(email);
+            await db.runTransaction(async (transaction) => {
+                const doc = await transaction.get(userRef);
+                if (doc.exists) {
+                    const currentBalance = doc.data().balance || 0;
+                    if (currentBalance >= amount) {
+                        transaction.update(userRef, {
+                            balance: firebase.firestore.FieldValue.increment(-amount)
+                        });
+                    } else {
+                        throw "Insufficient balance";
+                    }
+                }
+            });
+
+            alert("Withdrawal approved and balance deducted!");
+            loadWithdrawals();
+        } catch (err) {
+            console.error(err);
+            alert("Error approving withdrawal (possibly insufficient balance)");
+        }
+    };
+
+    window.rejectWithdrawal = async (docId, email) => {
+        if (!confirm(`Reject withdrawal for ${email}?`)) return;
+
+        await db.collection('withdrawals').doc(docId).update({
+            status: 'rejected',
+            processedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            processedBy: auth.currentUser.email
+        });
+
+        alert("Withdrawal rejected");
+        loadWithdrawals();
+    };
+
+    function showSection(id) {
+        document.querySelectorAll('main section').forEach(s => s.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+        if (id === 'deposits') loadDeposits();
+        if (id === 'kyc') loadKYC();
+        if (id === 'withdrawals') loadWithdrawals();
+    }
+
+    // Keep your beautiful modal system
+    const modalBack = document.getElementById('modalBack');
+    const modalContent = document.getElementById('modalContent');
+    function openModal(html) {
+        modalContent.innerHTML = html;
+        modalBack.style.display = 'flex';
+    }
+    function closeModal() {
+        modalBack.style.display = 'none';
+        modalContent.innerHTML = '';
+    }
+    modalBack.addEventListener('click', (e) => {
+        if (e.target === modalBack) closeModal();
+    });
+</script>
+</body>
+</html>

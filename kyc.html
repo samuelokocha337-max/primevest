@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYC Verification - PrimeVest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #246bfd;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #0f0f23;
+            --card-bg: rgba(255, 255, 255, 0.06);
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e1b4b, var(--bg));
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #246bfd, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .menu-toggle:hover { background: rgba(36,107,253,0.4); transform: scale(1.1); }
+
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 998;
+        }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+
+        nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: #0d1421;
+            padding: 100px 30px 40px;
+            transition: right 0.4s ease;
+            z-index: 999;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.6);
+            border-left: 1px solid #334155;
+        }
+        nav.active { right: 0; }
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+        nav a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 20px;
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-weight: 500;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+        nav a:hover {
+            background: rgba(36,107,253,0.25);
+            color: #60a5fa;
+            padding-left: 28px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin: 20px 0 40px;
+            font-size: 2rem;
+        }
+        .kyc-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+        .status {
+            text-align: center;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: bold;
+            margin-bottom: 24px;
+        }
+        .status.pending   { background: #f59e0b33; color: #fbbf24; }
+        .status.approved  { background: #10b98133; color: #34d399; }
+        .status.rejected  { background: #ef444433; color: #f87171; }
+        .status.not-submitted { background: #47556933; color: #94a3b8; }
+
+        label {
+            display: block;
+            margin: 20px 0 8px;
+            font-weight: 600;
+        }
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 14px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+        }
+        .preview {
+            margin-top: 10px;
+            max-width: 100%;
+            border-radius: 10px;
+            border: 2px dashed #334155;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 16px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        button[type="submit"]:hover { background: #0d8f63; transform: translateY(-2px); }
+        .note {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">PrimeVest</div>
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <nav id="navMenu">
+        <button class="close-menu" id="closeMenu">×</button>
+        <a href="dashboard.html"><i class="fas fa-home"></i> dashboard</a>
+        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+        <a href="kyc.html"><i class="fas fa-id-card"></i> KYC</a>
+          <a href="index.html"><i class="fas fa-home"></i>Home</a>
+        <a href="#" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<div class="container">
+    <h1>KYC Verification</h1>
+
+    <div class="kyc-card">
+        <div id="kycStatus" class="status not-submitted">
+            Status: Not Submitted
+        </div>
+
+        <form id="kycForm">
+            <label>Full Name (as on ID)</label>
+            <input type="text" id="fullName" required>
+
+            <label>ID Document (Passport / Driver's License / National ID)</label>
+            <input type="file" id="idUpload" accept="image/*" required>
+            <img id="idPreview" class="preview" style="display:none;">
+
+            <label>Selfie with ID</label>
+            <input type="file" id="selfieUpload" accept="image/*" required>
+            <img id="selfiePreview" class="preview" style="display:none;">
+
+            <button type="submit">Submit KYC</button>
+        </form>
+
+        <p class="note">
+            Your information is encrypted and secure. KYC is required for withdrawals above $1,000.
+        </p>
+    </div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyAvVtoG48BZUzZHGrAjphIngIJmTiLcg3Q",
+        authDomain: "investpro-eb5d8.firebaseapp.com",
+        projectId: "investpro-eb5d8",
+        storageBucket: "investpro-eb5d8.appspot.com",
+        messagingSenderId: "182699011262",
+        appId: "1:182699011262:web:43b1d005bd57e6544482ef"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Preview uploaded images
+    document.getElementById('idUpload').onchange = e => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => document.getElementById('idPreview').src = reader.result;
+            reader.onloadend = () => document.getElementById('idPreview').style.display = 'block';
+            reader.readAsDataURL(file);
+        }
+    };
+
+    document.getElementById('selfieUpload').onchange = e => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => document.getElementById('selfiePreview').src = reader.result;
+            reader.onloadend = () => document.getElementById('selfiePreview').style.display = 'block';
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // Load current KYC status
+    async function loadKYC() {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const doc = await db.collection('kyc').doc(user.uid).get();
+        if (doc.exists) {
+            const data = doc.data();
+            const statusEl = document.getElementById('kycStatus');
+            statusEl.textContent = `Status: ${data.status.toUpperCase()}`;
+            statusEl.className = `status ${data.status}`;
+
+            if (data.status === 'approved') {
+                document.getElementById('kycForm').style.display = 'none';
+                statusEl.innerHTML += ' - Verification Complete!';
+            } else if (data.status === 'pending') {
+                document.querySelector('button[type="submit"]').disabled = true;
+                document.querySelector('button[type="submit"]').textContent = 'Review in Progress...';
+            }
+        }
+    }
+
+    // Submit KYC
+    document.getElementById('kycForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const user = auth.currentUser;
+        if (!user) return alert("Please login");
+
+        const fullName = document.getElementById('fullName').value.trim();
+        const idFile = document.getElementById('idUpload').files[0];
+        const selfieFile = document.getElementById('selfieUpload').files[0];
+
+        if (!fullName || !idFile || !selfieFile) return alert("Please fill all fields");
+
+        const idReader = new FileReader();
+        idReader.onload = async () => {
+            const selfieReader = new FileReader();
+            selfieReader.onload = async () => {
+                try {
+                    await db.collection('kyc').doc(user.uid).set({
+                        userId: user.uid,
+                        email: user.email,
+                        fullName: fullName,
+                        idImage: idReader.result,
+                        selfieImage: selfieReader.result,
+                        status: 'pending',
+                        submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    alert("KYC submitted! Our team will review it within 24 hours.");
+                    loadKYC();
+                } catch (err) {
+                    alert("Upload failed. Try again.");
+                    console.error(err);
+                }
+            };
+            selfieReader.readAsDataURL(selfieFile);
+        };
+        idReader.readAsDataURL(idFile);
+    };
+
+    // Menu controls
+    document.getElementById('menuToggle').onclick = () => {
+        document.getElementById('navMenu').classList.add('active');
+        document.getElementById('menuOverlay').classList.add('active');
+    };
+    document.getElementById('closeMenu').onclick = document.getElementById('menuOverlay').onclick = () => {
+        document.getElementById('navMenu').classList.remove('active');
+        document.getElementById('menuOverlay').classList.remove('active');
+    };
+    document.getElementById('logoutLink').onclick = (e) => {
+        e.preventDefault();
+        auth.signOut().then(() => location.href = 'index.html');
+    };
+
+    // Load on start
+    auth.onAuthStateChanged(user => {
+        if (user) loadKYC();
+        else window.location.href = 'login.html';
+    });
+</script>
+
+</body>
+</html>

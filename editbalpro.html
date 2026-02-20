@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Update User – Admin Panel</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f6fa;
+    }
+
+    .container {
+        max-width: 550px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #111827;
+        margin-bottom: 25px;
+    }
+
+    label {
+        margin-top: 15px;
+        display: block;
+        font-weight: bold;
+        color: #374151;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-top: 8px;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 18px;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+
+    .charge-box {
+        display: flex;
+        gap: 10px;
+    }
+
+    .small-btn {
+        width: 50%;
+        padding: 12px;
+        background: #059669;
+        border-radius: 6px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    .small-btn:hover {
+        background: #047857;
+    }
+
+    .small-btn-remove {
+        background: #dc2626;
+    }
+
+    .small-btn-remove:hover {
+        background: #b91c1c;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Update User Account</h2>
+
+    <!-- SEARCH USER -->
+    <label>User Email</label>
+    <input type="text" placeholder="Enter user email">
+
+    <button>Load User Details</button>
+
+    <hr style="margin: 25px 0;">
+
+    <!-- DISPLAY & UPDATE -->
+    <label>Current Balance ($)</label>
+    <input type="number" placeholder="0.00">
+
+    <label>New Balance ($)</label>
+    <input type="number" placeholder="Enter new balance">
+
+    <label>Current Profit ($)</label>
+    <input type="number" placeholder="0.00">
+
+    <label>New Profit ($)</label>
+    <input type="number" placeholder="Enter new profit">
+
+    <button>Update User Info</button>
+
+    <hr style="margin: 25px 0;">
+
+    <!-- CHARGE USER -->
+    <h3 style="color:#111827; margin-bottom:10px;">Charge / Adjust User Balance</h3>
+
+    <label>Amount ($)</label>
+    <input type="number" placeholder="Enter amount">
+
+    <div class="charge-box">
+        <button class="small-btn">Add Funds</button>
+        <button class="small-btn small-btn-remove">Remove Funds</button>
+    </div>
+
+    <button style="background:#6b7280;" onclick="history.back()">Go Back</button>
+
+</div>
+
+</body>
+</html>

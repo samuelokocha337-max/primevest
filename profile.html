@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - PrimeVest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #246bfd;
+            --success: #10b981;
+            --bg: #0f0f23;
+            --card-bg: rgba(255, 255, 255, 0.06);
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e1b4b, var(--bg));
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #246bfd, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hamburger Menu */
+        .menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+        .menu-toggle:hover { background: rgba(36,107,253,0.4); transform: scale(1.1); }
+
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 998;
+        }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+
+        nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: #0d1421;
+            padding: 100px 30px 40px;
+            transition: right 0.4s ease;
+            z-index: 999;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.6);
+            border-left: 1px solid #334155;
+        }
+        nav.active { right: 0; }
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+        nav a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 20px;
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-weight: 500;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+        nav a:hover {
+            background: rgba(36,107,253,0.25);
+            color: #60a5fa;
+            padding-left: 28px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin: 20px 0 40px;
+            font-size: 2rem;
+        }
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #246bfd, #7c3aed);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: bold;
+        }
+        .info {
+            margin: 20px 0;
+            padding: 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+        }
+        .info label {
+            display: block;
+            color: var(--muted);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .info p {
+            font-size: 1.25rem;
+            font-weight: 600;
+            word-break: break-all;
+        }
+        .actions {
+            display: grid;
+            gap: 14px;
+            margin-top: 30px;
+        }
+        .actions button {
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        #editNameBtn { background: var(--primary); color: white; }
+        #editNameBtn:hover { background: #1d4ed8; transform: translateY(-2px); }
+        #changePassBtn { background: #475569; color: white; }
+        #changePassBtn:hover { background: #334155; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">PrimeVest</div>
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <nav id="navMenu">
+        <button class="close-menu" id="closeMenu">×</button>
+        <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
+        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+        <a href="kyc.html"><i class="fas fa-id-card"></i> KYC</a>
+        <a href="#" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<div class="container">
+    <h1>My Profile</h1>
+
+    <div class="profile-card">
+        <div class="avatar" id="avatarLetter">P</div>
+
+        <div class="info">
+            <label>Full Name</label>
+            <p id="displayName">Loading...</p>
+        </div>
+
+        <div class="info">
+            <label>Email Address</label>
+            <p id="userEmail">Loading...</p>
+        </div>
+
+        <div class="info">
+            <label>User ID (UID)</label>
+            <p id="userUID" style="font-size:0.9rem; opacity:0.8;">Loading...</p>
+        </div>
+
+        <div class="info">
+            <label>Account Created</label>
+            <p id="joinDate">Loading...</p>
+        </div>
+
+        <div class="info">
+            <label>Email Verified</label>
+            <p id="emailVerified">Loading...</p>
+        </div>
+
+        <div class="actions">
+            <button id="editNameBtn">Edit Name</button>
+            <button id="changePassBtn">Change Password</button>
+        </div>
+    </div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyAvVtoG48BZUzZHGrAjphIngIJmTiLcg3Q",
+        authDomain: "investpro-eb5d8.firebaseapp.com",
+        projectId: "investpro-eb5d8",
+        storageBucket: "investpro-eb5d8.appspot.com",
+        messagingSenderId: "182699011262",
+        appId: "1:182699011262:web:43b1d005bd57e6544482ef"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Load user data from Firebase Auth
+    function loadUserProfile() {
+        const user = auth.currentUser;
+
+        if (!user) {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        // Full Name
+        const name = user.displayName || "Not set";
+        document.getElementById('displayName').textContent = name;
+
+        // Avatar letter
+        document.getElementById('avatarLetter').textContent = (name.charAt(0) || user.email.charAt(0)).toUpperCase();
+
+        // Email
+        document.getElementById('userEmail').textContent = user.email;
+
+        // UID
+        document.getElementById('userUID').textContent = user.uid;
+
+        // Join Date
+        const created = user.metadata.creationTime;
+        document.getElementById('joinDate').textContent = new Date(created).toLocaleDateString('en-US', {
+            weekday: 'long', year: 'long', day: 'numeric', year: 'numeric'
+        });
+
+        // Email Verified
+        document.getElementById('emailVerified').innerHTML = user.emailVerified 
+            ? '<span style="color:#34d399;">Yes, Verified</span>' 
+            : '<span style="color:#f59e0b;">No, Not verified</span>';
+    }
+
+    // Edit Name
+    document.getElementById('editNameBtn').onclick = () => {
+        const currentName = auth.currentUser.displayName || "";
+        const newName = prompt("Enter your full name:", currentName);
+        if (newName && newName.trim() && newName.trim() !== currentName) {
+            auth.currentUser.updateProfile({
+                displayName: newName.trim()
+            }).then(() => {
+                alert("Name updated successfully!");
+                loadUserProfile();
+            }).catch(err => alert("Error: " + err.message));
+        }
+    };
+
+    // Change Password
+    document.getElementById('changePassBtn').onclick = () => {
+        if (confirm("Send password reset email to " + auth.currentUser.email + "?")) {
+            auth.sendPasswordResetEmail(auth.currentUser.email)
+                .then(() => alert("Check your email! Reset link sent."))
+                .catch(err => alert("Error: " + err.message));
+        }
+    };
+
+    // Hamburger Menu
+    document.getElementById('menuToggle').onclick = () => {
+        document.getElementById('navMenu').classList.add('active');
+        document.getElementById('menuOverlay').classList.add('active');
+    };
+    const closeMenu = () => {
+        document.getElementById('navMenu').classList.remove('active');
+        document.getElementById('menuOverlay').classList.remove('active');
+    };
+    document.getElementById('closeMenu').onclick = closeMenu;
+    document.getElementById('menuOverlay').onclick = closeMenu;
+    document.getElementById('logoutLink').onclick = (e) => {
+        e.preventDefault();
+        auth.signOut().then(() => location.href = 'index.html');
+    };
+
+    // Load profile when page opens
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            loadUserProfile();
+        } else {
+            window.location.href = 'login.html';
+        }
+    });
+</script>
+
+</body>
+</html>

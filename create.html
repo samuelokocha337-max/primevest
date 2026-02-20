@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - InvestSmart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #242441;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+
+        .container {
+            background: #fff;
+            padding: 40px 50px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            color: #1f2937;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1f2937;
+        }
+
+        form input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        form button:hover {
+            background-color: #2563eb;
+        }
+
+        form button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .login-link a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: #ef4444;
+            font-size: 0.9em;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .success {
+            color: #10b981;
+            font-size: 0.9em;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Create Account</h2>
+    <form id="signupForm">
+        <input type="text" id="fullname" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email Address" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="password" id="confirm_password" placeholder="Confirm Password" required>
+        <button type="submit" id="signupBtn">Sign Up</button>
+    </form>
+
+    <div id="message"></div>
+
+    <div class="login-link">
+        Already have an account? <a href="login.html">Login here</a>
+    </div>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+
+<script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAvVtoG48BZUzZHGrAjphIngIJmTiLcg3Q",
+        authDomain: "investpro-eb5d8.firebaseapp.com",
+        projectId: "investpro-eb5d8",
+        storageBucket: "investpro-eb5d8.firebasestorage.app",
+        messagingSenderId: "182699011262",
+        appId: "1:182699011262:web:43b1d005bd57e6544482ef",
+        measurementId: "G-S4WQTPNPYZ"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+
+    // DOM Elements
+    const signupForm = document.getElementById('signupForm');
+    const messageDiv = document.getElementById('message');
+    const signupBtn = document.getElementById('signupBtn');
+
+    signupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const fullname = document.getElementById('fullname').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm_password').value;
+
+        // Reset message
+        messageDiv.textContent = '';
+        messageDiv.className = '';
+
+        // Validation
+        if (!fullname) {
+            showError('Please enter your full name');
+            return;
+        }
+        if (password !== confirmPassword) {
+            showError('Passwords do not match');
+            return;
+        }
+        if (password.length < 6) {
+            showError('Password must be at least 6 characters');
+            return;
+        }
+
+        // Disable button
+        signupBtn.disabled = true;
+        signupBtn.textContent = 'Creating Account...';
+
+        // Create user with Firebase Auth
+        auth.createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Update display name
+                return userCredential.user.updateProfile({
+                    displayName: fullname
+                });
+            })
+            .then(() => {
+                // Optional: Send email verification
+                // return auth.currentUser.sendEmailVerification();
+
+                showSuccess('Account created successfully! Redirecting...');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            })
+            .catch((error) => {
+                console.error(error);
+                showError(getFirebaseErrorMessage(error.code));
+            })
+            .finally(() => {
+                signupBtn.disabled = false;
+                signupBtn.textContent = 'Sign Up';
+            });
+    });
+
+    function showError(msg) {
+        messageDiv.textContent = msg;
+        messageDiv.className = 'error';
+    }
+
+    function showSuccess(msg) {
+        messageDiv.textContent = msg;
+        messageDiv.className = 'success';
+    }
+
+    function getFirebaseErrorMessage(code) {
+        switch (code) {
+            case 'auth/email-already-in-use':
+                return 'This email is already registered. Please login instead.';
+            case 'auth/weak-password':
+                return 'Password is too weak.';
+            case 'auth/invalid-email':
+                return 'Please enter a valid email address.';
+            default:
+                return error.message || 'An error occurred. Please try again.';
+        }
+    }
+</script>
+
+</body>
+</html>

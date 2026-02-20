@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Investment Platform</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f6fa;
+    }
+
+    header {
+        background: #111827;
+        color: white;
+        padding: 18px 40px;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .container {
+        display: flex;
+    }
+
+    .sidebar {
+        width: 270px;
+        background: #1f2937;
+        height: 100vh;
+        color: white;
+        padding-top: 20px;
+        position: fixed;
+    }
+
+    .sidebar a {
+        display: block;
+        padding: 14px 25px;
+        text-decoration: none;
+        color: white;
+        margin-bottom: 5px;
+        font-size: 15px;
+    }
+
+    .sidebar a:hover {
+        background: #374151;
+    }
+
+    .main {
+        margin-left: 270px;
+        padding: 30px;
+        width: calc(100% - 270px);
+    }
+
+    h2 {
+        color: #111827;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table th, table td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    table th {
+        background: #e5e7eb;
+        color: #111827;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 8px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        padding: 10px 16px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+</style>
+</head>
+<body>
+
+<header>Admin Control Panel</header>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <a href="#">Dashboard</a>
+        <a href="#">Users</a>
+        <a href="#">Edit User Balances</a>
+        <a href="#">Deposit Methods</a>
+        <a href="#">Crypto Wallets</a>
+        <a href="#">Bank Details</a>
+        <a href="#">PayPal Details</a>
+        <a href="#">KYC Verifications</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <!-- USER LIST -->
+        <div class="card">
+            <h2>User Management</h2>
+
+            <input type="text" placeholder="Search user by name or email">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Balance</th>
+                        <th>Profit</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>John Doe</td>
+                        <td>john@example.com</td>
+                        <td>$500</td>
+                        <td>$120</td>
+                        <td><button onclick="openEdit()">Edit</button></td>
+                    </tr>
+
+                    <tr>
+                        <td>002</td>
+                        <td>Sarah Brown</td>
+                        <td>sarah@example.com</td>
+                        <td>$760</td>
+                        <td>$310</td>
+                        <td><button onclick="openEdit()">Edit</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- EDIT FORM -->
+        <div class="card">
+            <h2>Edit User Information</h2>
+
+            <label>Balance</label>
+            <input type="number" placeholder="Enter new balance">
+
+            <label>Profit</label>
+            <input type="number" placeholder="Enter new profit">
+
+            <button>Update User</button>
+        </div>
+
+        <!-- BANK DETAILS -->
+        <div class="card">
+            <h2>Bank Deposit Details</h2>
+
+            <label>Bank Name</label>
+            <input type="text" placeholder="Enter bank name">
+
+            <label>Account Name</label>
+            <input type="text" placeholder="Enter account name">
+
+            <label>Account Number</label>
+            <input type="text" placeholder="Enter account number">
+
+            <button>Save Bank Details</button>
+        </div>
+
+        <!-- CRYPTO DETAILS -->
+        <div class="card">
+            <h2>Crypto Wallet Addresses</h2>
+
+            <label>Bitcoin Wallet</label>
+            <input type="text" placeholder="Enter BTC wallet">
+
+            <label>USDT Wallet (TRC20 / ERC20)</label>
+            <input type="text" placeholder="Enter USDT wallet">
+
+            <label>Ethereum Wallet</label>
+            <input type="text" placeholder="Enter ETH wallet">
+
+            <label>Solana Wallet</label>
+            <input type="text" placeholder="Enter SOL wallet">
+
+            <button>Save Crypto Wallets</button>
+        </div>
+
+        <!-- PAYPAL -->
+        <div class="card">
+            <h2>PayPal Deposit Details</h2>
+
+            <label>PayPal Email / Tag</label>
+            <input type="text" placeholder="Enter PayPal tag">
+
+            <button>Save PayPal Details</button>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
