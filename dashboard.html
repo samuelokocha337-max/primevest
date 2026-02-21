@@ -498,7 +498,7 @@
             <input type="text" id="walletAddress" placeholder="e.g. bc1qxy2kgdyg..." required>
 
             <label style="color:#e2e8f0; font-weight:600; display:block; margin:20px 0 8px;">Amount to Withdraw (USD)</label>
-            <input type="number" id="withdrawAmount" placeholder="Enter amount (min $50)" min="50" step="1" required>
+            <input type="number" id="withdrawAmount" placeholder="Enter amount (min $100)" min="100" step="1" required>
 
             <div id="withdrawError" style="color:#f87171; text-align:center; margin:12px 0; font-weight:bold; display:none;">
                 Insufficient balance or invalid amount!
@@ -510,7 +510,7 @@
         </form>
 
         <p style="text-align:center; color:#94a3b8; font-size:0.9rem; margin-top:20px;">
-            Minimum: $1000 | Fee: 2% | Processed in 30 minutes-1 hours
+            Minimum: $100 | Fee: 2% | Processed in 10 minutes-30 minutes
         </p>
     </div>
 </div>
@@ -530,11 +530,11 @@
             <option value="USDT">USDT (TRC20)</option>
         </select>
 
-        <div id="depositWalletAddress" class="wallet">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
+        <div id="depositWalletAddress" class="wallet">14JzKuT8m7KYoxiFt7fCcYRXhhkVo5p7XY</div>
         <button class="copy-btn" id="copyDepositAddress">Copy Address</button>
 
         <form id="depositForm">
-            <input type="number" id="depositAmount" placeholder="Amount in USD" required min="10">
+            <input type="number" id="depositAmount" placeholder="Amount in USD" required min="100">
             <input type="file" id="receiptUpload" accept="image/*" required>
             <button type="submit">Submit Proof</button>
         </form>
@@ -542,7 +542,7 @@
 </div>
 
 <footer>
-    © 2025 PrimeVest • Secure & Trusted Investment Platform
+    © 2022 PrimeVest • Secure & Trusted Investment Platform
 </footer>
 
 <!-- Firebase SDKs -->
@@ -567,10 +567,10 @@
     const storage = firebase.storage();
 
     const wallets = {
-        BTC: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
-        ETH: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-        SOL: "7x8yM8vQ9Kz3p8sN2vL5mKj9xP2wQ8rT5vL3nX9kP7qR",
-        USDT: "TXYZ1234567890abcdef1234567890abcdef12"
+        BTC: "14JzKuT8m7KYoxiFt7fCcYRXhhkVo5p7XY",
+        ETH: "0x661a5c2ea0a2d4204b0efe4a05b16644ca90e7ed",
+        SOL: "9iQnFqnN4uELR6UZBUhuYsSgUc6tqCyP8JiXTmDZDryN",
+        USDT: "TBhKpcNFGvcvpdbMskGThAWXpfRvzooU3p"
     };
 
     // === Mobile Menu ===
@@ -819,4 +819,5 @@
     };
 </script>
 </body>
+
 </html>
