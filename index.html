@@ -198,6 +198,7 @@
       <div class="label">Total funding</div>
     </div>
   </div>
+   <div id="footer"></div>
   <!-- Scripts -->
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
@@ -328,6 +329,12 @@
       alert(`Investing $${Number(amt).toLocaleString()}... (Demo mode)`);
     };
   </script>
-   <div id="footer"></div>
+  <script>
+fetch("footer.html")
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById("footer").innerHTML = data;
+  });
+</script>
 </body>
 </html>
