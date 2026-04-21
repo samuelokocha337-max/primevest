@@ -1,3 +1,6 @@
+i want you to add it to my exiting code
+add it after the  choose your investment plan 
+also make everything align 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,150 +43,45 @@
     .plan p{color:var(--muted);margin:0 0 16px}
     .plan .min{font-size:18px;font-weight:600;color:var(--accent)}
     .plan .btn{margin-top:16px;width:100%}
-
-    /* ==================== NEW TRADING STEPS SECTION ==================== */
-    .trading-steps {
-      padding: 80px 48px;
-      background: linear-gradient(135deg, #0f1724, #1a2338);
-    }
-    .trading-steps h2 {
-      text-align: center;
-      font-size: 38px;
-      color: white;
-      margin: 0 0 60px 0;
-    }
-    .steps-container {
-      display: flex;
-      gap: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .step-card {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px;
-      padding: 40px 32px;
-      position: relative;
-      overflow: hidden;
-      min-height: 480px;
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-    .step-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 50px rgba(36, 107, 253, 0.25);
-    }
-    .step-card h3 {
-      font-size: 28px;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 16px;
-    }
-    .step-card p {
-      color: #a5b4fc;
-      line-height: 1.6;
-      font-size: 15.5px;
-      margin-bottom: 80px;
-    }
-
-    /* Glass Icons */
-    .step-icon {
-      position: absolute;
-      bottom: 40px;
-      width: 180px;
-      height: 180px;
-    }
-
-    /* Register */
-    .register .step-icon {
-      left: 30px;
-    }
-    .register .face {
-      width: 110px;
-      height: 110px;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(20px);
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .fingerprint {
-      position: absolute;
-      bottom: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    /* Fund */
-    .fund .step-icon {
-      left: 20px;
-      top: 60px;
-    }
-    .phone {
-      width: 145px;
-      height: 270px;
-      background: #0f172a;
-      border-radius: 36px;
-      position: relative;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-      overflow: hidden;
-    }
-    .phone-screen {
-      position: absolute;
-      top: 22px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 105px;
-      height: 190px;
-      background: linear-gradient(180deg, #1e40af, #60a5fa);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Trade */
-    .trade .step-icon {
-      right: 30px;
-      bottom: 50px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      align-items: flex-end;
-    }
-    .currency {
-      width: 92px;
-      height: 92px;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(20px);
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 52px;
-      font-weight: 700;
-      color: #246bfd;
-      box-shadow: 0 15px 35px rgba(36,107,253,0.4);
-    }
-
     footer{padding:24px 28px;color:var(--muted);font-size:14px;text-align:center;border-top:1px solid rgba(255,255,255,0.03)}
-    
-    @media (max-width: 1024px) {
-      .steps-container {
-        flex-direction: column;
-        gap: 30px;
-      }
-      .step-card {
-        min-height: 420px;
-      }
+    @media (max-width:960px){
+      .hero{height:auto;padding:32px 24px}a
+      .hero-inner{flex-direction:column;gap:40px}
+      .right{width:100%}
     }
-    @media (max-width: 640px) {
-      .trading-steps { padding: 60px 24px; }
+    .sam{
+        margin: 47px;
+      padding:0 20px;
+      justify-content: center;
+      align-items: center;
+      color: white;
     }
+   
+  .stats-container {
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+    .stat {
+      margin: 60px 0;
+    }
+   
+    .number {
+      font-size: clamp(3.5rem, 12vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -1px;
+      margin: 0;
+    }
+   
+    .label {
+      font-size: clamp(1.1rem, 4vw, 1.35rem);
+      margin-top: 12px;
+      opacity: 0.85;
+      font-weight: 500;
+    }
+   
   </style>
 </head>
 <body>
@@ -217,6 +115,7 @@
                 <div id="balance" style="font-weight:700;font-size:24px;color:white">$0.00</div>
               </div>
             </div>
+            <!-- Testimonials (will be randomized) -->
             <div class="testimonials" id="testimonialsContainer"></div>
           </div>
           <div class="right">
@@ -240,8 +139,7 @@
           </div>
         </div>
       </section>
-
-      <!-- Choose Your Investment Plan -->
+      <!-- Added Plan List Section -->
       <section style="padding:60px 48px;background:linear-gradient(to bottom, rgba(36,107,253,0.04), transparent)">
         <h2 style="text-align:center;font-size:38px;color:white;margin:0 0 48px">Choose Your Investment Plan</h2>
         <div class="plans">
@@ -265,61 +163,6 @@
           </div>
         </div>
       </section>
-
-      <!-- New: Register • Fund • Trade Section -->
-      <section class="trading-steps">
-        <h2>Get Started in 3 Easy Steps</h2>
-        <div class="steps-container">
-          <!-- Register -->
-          <div class="step-card register">
-            <h3>Register</h3>
-            <p>Choose account type and complete our fast and secure application form.</p>
-            <div class="step-icon">
-              <div class="face">
-                <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
-                  <rect x="8" y="8" width="52" height="52" rx="12" fill="#246BFD"/>
-                  <circle cx="34" cy="28" r="8" fill="white"/>
-                  <circle cx="34" cy="48" r="6" fill="white"/>
-                  <path d="M22 38 Q34 52 46 38" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <svg class="fingerprint" width="140" height="140" viewBox="0 0 140 140" fill="none">
-                <path d="M70 20 Q40 40 40 70 Q40 95 55 115" stroke="#246BFD" stroke-width="14" stroke-linecap="round" fill="none"/>
-                <path d="M70 35 Q50 50 50 75 Q50 95 65 110" stroke="#246BFD" stroke-width="10" stroke-linecap="round" fill="none"/>
-                <path d="M70 50 Q58 60 58 80 Q58 95 70 105" stroke="#246BFD" stroke-width="8" stroke-linecap="round" fill="none"/>
-              </svg>
-            </div>
-          </div>
-
-          <!-- Fund -->
-          <div class="step-card fund">
-            <h3>Fund</h3>
-            <p>Fund your trading account using a wide range of instant and secure deposit methods.</p>
-            <div class="step-icon">
-              <div class="phone">
-                <div class="phone-screen">
-                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-                    <circle cx="26" cy="26" r="18" fill="white"/>
-                    <path d="M26 18 Q20 24 26 32 Q32 24 26 18" fill="#246BFD"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Trade -->
-          <div class="step-card trade">
-            <h3>Trade</h3>
-            <p>Trade 10,000+ instruments on 5 platforms with highly competitive spreads and low commissions.</p>
-            <div class="step-icon">
-              <div class="currency" style="transform: rotate(-10deg);">£</div>
-              <div class="currency" style="transform: rotate(8deg);"> $</div>
-              <div class="currency" style="transform: rotate(-6deg);">€</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <a href="support.html" style="position:fixed;bottom:24px;right:24px;padding:14px 24px;background:#0ea5a5;color:white;border-radius:50px;text-decoration:none;display:flex;align-items:center;gap:12px;z-index:100;box-shadow:0 6px 24px rgba(0,0,0,0.4)">
         <svg width="22" height="22" fill="white" viewBox="0 0 24 24">
           <path d="M12 3C6.48 3 2 6.92 2 11.5c0 2.27 1.06 4.32 2.82 5.93L4 21l3.83-1.78c1.21.33 2.51.51 3.88.51 5.52 0 10-3.92 10-8.5S17.52 3 12 3z"/>
@@ -327,10 +170,9 @@
         Live Support
       </a>
     </main>
-
-    <div class="sam">
-      <h1>About Us</h1>
-      <p>
+<div class="sam">
+    <h1>About Us</h1>
+    <p>
         At PrimeVest, we make wealth building simple, secure, and accessible to everyone anywhere in the world, with any starting amount.<br><br>
         Founded in 2022 by experienced finance professionals, we created this platform to break down barriers: high fees, complexity, and exclusivity in traditional investing. Our goal? Empower everyday investors with smart, low-cost tools for long-term growth.<br><br>
         Today, thousands of users worldwide invest confidently in global stocks, ETFs, mutual funds, fixed-income, and diversified portfolios through our easy-to-use app and web platform.<br><br>
@@ -338,44 +180,47 @@
         We focus on disciplined investing, not shortcuts. Build your future steadily: retirement, education, or financial freedom.<br><br>
         Join investors worldwide taking control. Start small, grow smart.<br><br>
         Open your account in minutes your tomorrow starts today.
-      </p>
-    </div>
-
+    </p>
+</div>
     <div class="stats-container">
-      <div class="stat">
-        <div class="number">95k+</div>
-        <div class="label">Discord Members</div>
-      </div>
-      <div class="stat">
-        <div class="number">25k+</div>
-        <div class="label">Funded traders</div>
-      </div>
-      <div class="stat">
-        <div class="number">$557k+</div>
-        <div class="label">Highest total payout</div>
-      </div>
-      <div class="stat">
-        <div class="number">$130m+</div>
-        <div class="label">Total funding</div>
-      </div>
+    <div class="stat">
+      <div class="number">95k+</div>
+      <div class="label">Discord Members</div>
     </div>
-
-    <footer>
-      © 2022 PrimeVest • Built with ❤️ for smart investors
-    </footer>
+    <div class="stat">
+      <div class="number">25k+</div>
+      <div class="label">Funded traders</div>
+    </div>
+    <div class="stat">
+      <div class="number">$557k+</div>
+      <div class="label">Highest total payout</div>
+    </div>
+    <div class="stat">
+      <div class="number">$130m+</div>
+      <div class="label">Total funding</div>
+    </div>
   </div>
-
-  <!-- Scripts (unchanged) -->
+ <footer>
+    © 2022 PrimeVest • Built with ❤️ for smart investors
+  </footer>
+</div>
+  <!-- Scripts -->
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
   <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
   <script>
-    // Your existing script remains exactly the same
-    const firebaseConfig = { /* ... your config ... */ };
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyAvVtoG48BZUzZHGrAjphIngIJmTiLcg3Q",
+      authDomain: "investpro-eb5d8.firebaseapp.com",
+      projectId: "investpro-eb5d8",
+      storageBucket: "investpro-eb5d8.firebasestorage.app",
+      messagingSenderId: "182699011262",
+      appId: "1:182699011262:web:43b1d005bd57e6544482ef"
+    };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const authNav = document.getElementById('authNav');
-
     auth.onAuthStateChanged((user) => {
       if (user) {
         authNav.innerHTML = `
@@ -394,10 +239,100 @@
         `;
       }
     });
-
-    // Rest of your scripts (testimonials, charts, etc.) remain unchanged...
-    const testimonialsData = [ /* ... your testimonials ... */ ];
-    // ... (all your existing JavaScript code continues here) ...
+    // ── Testimonials ───────────────────────────────────────────────
+    const testimonialsData = [
+      { text: "Started small with $100 and already seeing consistent monthly returns. The automation is a real time-saver — love it!", author: "Jose S., Columbia" },
+      { text: "Best decision I made this year. Up over 13% in just 24 hours with almost zero effort. Highly recommend PrimeVest.", author: "Santo P., Mexico" },
+      { text: "The platform is super clean and the live prices actually update in real time. My portfolio is growing faster than my savings account ever did.", author: "Ava J., USA" },
+      { text: "As a beginner I was nervous, but the system is beginner-friendly yet powerful. Doubled my starting amount in under 6 hours.", author: "Akarm N., Dubia" },
+      { text: "Secure, transparent, and actually profitable. Finally found something better than traditional banks!", author: "Nkosi D.,South Afirca " },
+      { text: "The quick invest feature is brilliant — I added funds on mobile and saw returns the next day.", author: "Victor S., Spain" },
+      { text: "Customer support responded in minutes when I had a question. Professional team behind this.", author: "Davis P., Canada" },
+      { text: "From $800 to $1,150 in 3 hours. Steady gains without me having to watch charts all day.", author: "Albert K., United Kingdom" }
+    ];
+    const container = document.getElementById('testimonialsContainer');
+    function renderRandomTestimonials() {
+      container.classList.add('fade');
+      setTimeout(() => {
+        const shuffled = [...testimonialsData].sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 4);
+        container.innerHTML = selected.map(t => `
+          <div class="testimonial card">
+            <p>"${t.text}"</p>
+            <div class="author">— ${t.author}</div>
+          </div>
+        `).join('');
+        container.classList.remove('fade');
+      }, 800);
+    }
+    // Initial render + rotate every 8 seconds
+    renderRandomTestimonials();
+    setInterval(renderRandomTestimonials, 8000);
+    // ── Charts (fixed for v5 API) ────────────────────────────────────
+    window.addEventListener('load', () => {
+      if (typeof LightweightCharts === 'undefined') {
+        console.error('Lightweight Charts failed to load');
+        return;
+      }
+      // Background Chart
+      const bgChart = LightweightCharts.createChart(document.getElementById('bgChart'), {
+        width: window.innerWidth,
+        height: 480,
+        layout: { background: { type: 'solid', color: 'transparent' }, textColor: '#666' },
+        grid: { vertLines: { visible: false }, horzLines: { visible: false } },
+        crosshair: { mode: LightweightCharts.CrosshairMode.Hidden },
+        rightPriceScale: { visible: false },
+        timeScale: { visible: false },
+      });
+      const candleSeries = bgChart.addSeries(LightweightCharts.CandlestickSeries);
+      candleSeries.setData(generateCandles(180, 42000));
+      // Mini Chart
+      const miniChart = LightweightCharts.createChart(document.getElementById('miniChart'), {
+        width: 360,
+        height: 220,
+        layout: { background: { type: 'solid', color: 'transparent' }, textColor: '#888' },
+        grid: { vertLines: { visible: false }, horzLines: { visible: false } },
+        rightPriceScale: { visible: false },
+        timeScale: { visible: false },
+      });
+      const areaSeries = miniChart.addSeries(LightweightCharts.AreaSeries, {
+        topColor: 'rgba(36, 107, 253, 0.5)',
+        bottomColor: 'rgba(36, 107, 253, 0.1)',
+        lineColor: '#246BFD',
+      });
+      areaSeries.setData(generateCandles(60, 42000).map(c => ({ time: c.time, value: c.close })));
+      // Resize
+      window.addEventListener('resize', () => {
+        bgChart.applyOptions({ width: window.innerWidth });
+        miniChart.applyOptions({ width: document.getElementById('miniChart').clientWidth });
+      });
+    });
+    function generateCandles(count, startPrice) {
+      const data = [];
+      let time = Math.floor(Date.now() / 1000) - count * 3600;
+      let price = startPrice;
+      for (let i = 0; i < count; i++) {
+        const open = price;
+        const close = price * (1 + (Math.random() - 0.5) * 0.02);
+        const high = Math.max(open, close) * (1 + Math.random() * 0.01);
+        const low = Math.min(open, close) * (1 - Math.random() * 0.01);
+        data.push({ time: time + i * 3600, open, high, low, close });
+        price = close;
+      }
+      return data;
+    }
+    // Simulate live price
+    setInterval(() => {
+      const change = (Math.random() - 0.5) * 120;
+      const newPrice = (42000 + change).toFixed(2);
+      document.getElementById('livePrice').textContent = '$' + newPrice;
+    }, 4000);
+    // Quick Invest
+    document.getElementById('quickInvest').onclick = () => {
+      const amt = document.getElementById('amt').value.trim();
+      if (!amt || isNaN(amt) || Number(amt) <= 0) return alert("Please enter a valid amount");
+      alert(`Investing $${Number(amt).toLocaleString()}... (Demo mode)`);
+    };
   </script>
 </body>
 </html>
