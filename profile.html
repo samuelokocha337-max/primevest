@@ -239,6 +239,7 @@
         </div>
     </div>
 </div>
+<div id="footer"></div>
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
@@ -339,6 +340,12 @@
         }
     });
 </script>
-
+<script>
+fetch("footer.html")
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById("footer").innerHTML = data;
+  });
+</script>
 </body>
 </html>
