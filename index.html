@@ -150,11 +150,34 @@ text-shadow: 0 2px 4px rgba(0,0,0,0.7);
 
 .features {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 30px;
   padding: 60px 40px;
 }
-   
+
+   .about {
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.about-container {
+  max-width: 900px;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+
+.about h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 20px;
+}
+
+.about p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.7;
+  color: #aaa;
+}
   </style>
 </head>
 <body>
@@ -220,22 +243,23 @@ text-shadow: 0 2px 4px rgba(0,0,0,0.7);
             <h3>Starter</h3>
             <p>Low risk — target 6-9% annual return</p>
             <div class="min">Min: $150</div>
-            <button class="login.html">Invest Now</button>
+            <button class="btn">Invest Now</button>
           </div>
           <div class="plan">
             <h3>Growth</h3>
             <p>Balanced — target 12-17% annual return</p>
             <div class="min">Min: $500</div>
-            <button class="login.html">Invest Now</button>
+           <button class="btn">Invest Now</button>
           </div>
           <div class="plan">
             <h3>Pro</h3>
             <p>Advanced — target 20%+ annual return</p>
             <div class="min">Min: $1,500</div>
-            <button class="login.html">Invest Now</button>
+            <button class="btn">Invest Now</button>
           </div>
         </div>
       </section>
+    
       <main>
     <section class="features">
   <div class="cardb">
@@ -254,11 +278,11 @@ text-shadow: 0 2px 4px rgba(0,0,0,0.7);
   </div>
 </section>
    </main> 
-</body>
-</html>
+      <section class="about">
+  <div class="about-container">
     <h1>About Us</h1>
     <p>
-        At PrimeVest, we make wealth building simple, secure, and accessible to everyone anywhere in the world, with any starting amount.<br><br>
+       At PrimeVest, we make wealth building simple, secure, and accessible to everyone anywhere in the world, with any starting amount.<br><br>
         Founded in 2022 by experienced finance professionals, we created this platform to break down barriers: high fees, complexity, and exclusivity in traditional investing. Our goal? Empower everyday investors with smart, low-cost tools for long-term growth.<br><br>
         Today, thousands of users worldwide invest confidently in global stocks, ETFs, mutual funds, fixed-income, and diversified portfolios through our easy-to-use app and web platform.<br><br>
         Backed by CFA charterholders, seasoned portfolio managers, and fintech experts, we deliver transparent, evidence-based strategies no hidden fees, real-time tracking, and strong security via trusted global partners.<br><br>
@@ -266,7 +290,9 @@ text-shadow: 0 2px 4px rgba(0,0,0,0.7);
         Join investors worldwide taking control. Start small, grow smart.<br><br>
         Open your account in minutes your tomorrow starts today.
     </p>
-</div>
+  </div>
+</section>
+  
     <div class="stats-container">
     <div class="stat">
       <div class="number">95k+</div>
