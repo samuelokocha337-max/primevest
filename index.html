@@ -178,6 +178,41 @@ text-shadow: 0 2px 4px rgba(0,0,0,0.7);
   line-height: 1.7;
   color: #aaa;
 }
+  .btn {
+  background: rgba(36, 107, 253, 0.25);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(36, 107, 253, 0.4);
+  cursor: pointer;
+  font-size: 14px;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  transition: 0.3s ease;
+}
+
+.btn:hover {
+  background: rgba(36, 107, 253, 0.45);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  transition: 0.3s ease;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
   </style>
 </head>
 <body>
@@ -329,24 +364,37 @@ text-shadow: 0 2px 4px rgba(0,0,0,0.7);
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const authNav = document.getElementById('authNav');
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        authNav.innerHTML = `
-          <div style="display:flex;gap:12px;align-items:center">
-            <span style="color:white;font-size:14px">Hi, ${user.displayName || user.email.split('@')[0]}!</span>
-            <button class="btn" onclick="window.location.href='dashboard.html'">Dashboard</button>
-            <button class="btn-outline" onclick="firebase.auth().signOut()">Logout</button>
-          </div>
-        `;
-      } else {
-        authNav.innerHTML = `
-          <div style="display:flex;gap:10px;align-items:center">
-            <button class="btn" onclick="window.location.href='create.html'">Sign Up</button>
-            <button class="btn-outline" onclick="window.location.href='login.html'">Login</button>
-          </div>
-        `;
-      }
-    });
+   auth.onAuthStateChanged((user) => {
+  if (user) {
+    authNav.innerHTML = `
+      <div style="display:flex;gap:12px;align-items:center">
+        <span style="color:white;font-size:14px">
+          Hi, ${user.displayName || user.email.split('@')[0]}!
+        </span>
+
+        <button class="btn" onclick="window.location.href='dashboard.html'">
+          📊 Dashboard
+        </button>
+
+        <button class="btn-outline" onclick="firebase.auth().signOut()">
+          🚪 Logout
+        </button>
+      </div>
+    `;
+  } else {
+    authNav.innerHTML = `
+      <div style="display:flex;gap:10px;align-items:center">
+        <button class="btn" onclick="window.location.href='create.html'">
+          ✨ Sign Up
+        </button>
+
+        <button class="btn-outline" onclick="window.location.href='login.html'">
+          🔐 Login
+        </button>
+      </div>
+    `;
+  }
+});
     // ── Testimonials ───────────────────────────────────────────────
     const testimonialsData = [
       { text: "Started small with $100 and already seeing consistent monthly returns. The automation is a real time-saver — love it!", author: "Jose S., Columbia" },
