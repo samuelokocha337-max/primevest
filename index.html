@@ -79,6 +79,81 @@
       opacity: 0.85;
       font-weight: 500;
     }
+         .features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 40px;
+}
+
+.card {
+  background: #0f1724;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.card img {
+  width: 60px;
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  color: white;
+}
+
+.card p {
+  color: #aaa;
+  font-size: 14px;
+}
+.cardF {
+  background-image: url(https://media.istockphoto.com/id/2209396219/photo/programmer-securing-data-with-two-factor-authentication-using-laptop-and-smartphone.webp?a=1&b=1&s=612x612&w=0&k=20&c=V9TBWIKHR-3gxF_2LSq9kwsyXnntpHA_bdjmjOMmTKA=);
+  padding: 30px 20px;
+  border-radius: 14px;
+  text-align:center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: azure;
+  background-size: cover;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+
+}
+.cardb{
+  background-image: url(https://media.istockphoto.com/id/2169459729/photo/business-growth-and-startup-success-concept-a-hand-touching-rocket-icon-on-digital-interface.webp?a=1&b=1&s=612x612&w=0&k=20&c=b73JpRAlA7eF8XyJemMA5v1kSnxH-3dO0-ddKiR651s=);
+  padding: 30px 40px;
+  border-radius: 14px;
+  text-align:center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+color: azure;
+background-size: cover;
+text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+}
+.cardc{
+  background-image: url(https://media.istockphoto.com/id/2234562954/photo/ai-powered-data-analytics-and-project-management-dashboard-on-laptop-screen-showing-real-time.webp?a=1&b=1&s=612x612&w=0&k=20&c=25TdYjvy4TWvJSQoclNzF5Uy-hdggJa1gIDwVaS_Mac=);
+  padding: 30px 20px;
+  border-radius: 14px;
+  text-align:center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+color:azure;
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+}
+
+
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 60px 40px;
+}
    
   </style>
 </head>
@@ -145,30 +220,42 @@
             <h3>Starter</h3>
             <p>Low risk — target 6-9% annual return</p>
             <div class="min">Min: $150</div>
-            <button class="btn investBtn">Invest Now</button>
+            <button class="login.html">Invest Now</button>
           </div>
           <div class="plan">
             <h3>Growth</h3>
             <p>Balanced — target 12-17% annual return</p>
             <div class="min">Min: $500</div>
-            <button class="btn investBtn">Invest Now</button>
+            <button class="login.html">Invest Now</button>
           </div>
           <div class="plan">
             <h3>Pro</h3>
             <p>Advanced — target 20%+ annual return</p>
             <div class="min">Min: $1,500</div>
-            <button class="btn investBtn">Invest Now</button>
+            <button class="login.html">Invest Now</button>
           </div>
         </div>
       </section>
-      <a href="support.html" style="position:fixed;bottom:24px;right:24px;padding:14px 24px;background:#0ea5a5;color:white;border-radius:50px;text-decoration:none;display:flex;align-items:center;gap:12px;z-index:100;box-shadow:0 6px 24px rgba(0,0,0,0.4)">
-        <svg width="22" height="22" fill="white" viewBox="0 0 24 24">
-          <path d="M12 3C6.48 3 2 6.92 2 11.5c0 2.27 1.06 4.32 2.82 5.93L4 21l3.83-1.78c1.21.33 2.51.51 3.88.51 5.52 0 10-3.92 10-8.5S17.52 3 12 3z"/>
-        </svg>
-        Live Support
-      </a>
-    </main>
-<div class="sam">
+      <main>
+    <section class="features">
+  <div class="cardb">
+    <h3>Fast Trading Execution</h3>
+    <p>Experience lightning-fast order execution with minimal slippage.</p>
+  </div>
+
+  <div class="cardF">
+    <div class="content">  <h3>Secure Platform</h3>
+    <p>Your funds and data are protected with top-level encryption.</p>
+  </div>
+</div>
+  <div class="cardc">
+    <h3>Real-Time Analytics</h3>
+    <p>Track your investments with accurate and live data insights.</p>
+  </div>
+</section>
+   </main> 
+</body>
+</html>
     <h1>About Us</h1>
     <p>
         At PrimeVest, we make wealth building simple, secure, and accessible to everyone anywhere in the world, with any starting amount.<br><br>
