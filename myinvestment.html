@@ -272,6 +272,7 @@
         <p>No investments yet. Go to dashboard and click <strong>Start Investing</strong>!</p>
     </div>
 </div>
+    <div id="footer"></div>
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
@@ -386,6 +387,13 @@
         if (user) loadInvestments();
         else window.location.href = 'login.html';
     });
+</script>
+        <script>
+fetch("footer.html")
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById("footer").innerHTML = data;
+  });
 </script>
 
 </body>
