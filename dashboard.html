@@ -361,6 +361,39 @@
             .container { padding: 0 12px; margin: 16px auto; }
             .modal-content { padding: 20px; }
         }
+        .auth-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    margin-top: 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #e2e8f0;
+
+    /* glass effect */
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    transition: all 0.3s ease;
+}
+
+.auth-btn i {
+    width: 24px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.auth-btn:hover {
+    transform: translateX(8px);
+    background: rgba(36, 107, 253, 0.25);
+    border-color: rgba(36, 107, 253, 0.5);
+    color: #60a5fa;
+}
     </style>
 </head>
 <body>
@@ -370,16 +403,29 @@
     <button class="menu-toggle" id="menuToggle">
         <i class="fas fa-bars"></i>
     </button>
-    <nav id="navMenu">
-        <button class="close-menu" id="closeMenu">×</button>
-        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
-        <a href="#" id="depositLink"><i class="fas fa-plus-circle"></i> Deposit</a>
-        <a href="myinvestment.html"><i class="fas fa-chart-line"></i> My investment</a>
-        <a href="kyc.html"><i class="fas fa-id-card"></i> KYC</a>
-        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
-        <a href="index.html"><i class="fas fa-home"></i>Home</a>
-        <a href="#" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </nav>
+   <nav id="navMenu">
+    <button class="close-menu" id="closeMenu">×</button>
+
+    <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="#" id="depositLink"><i class="fas fa-plus-circle"></i> Deposit</a>
+    <a href="myinvestment.html"><i class="fas fa-chart-line"></i> My investment</a>
+    <a href="kyc.html"><i class="fas fa-id-card"></i> KYC</a>
+    <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+
+    <!-- 🔥 AUTH BUTTONS (NEW GLASS STYLE) -->
+    <a href="login.html" class="auth-btn">
+        <i class="fas fa-right-to-bracket"></i> Login
+    </a>
+
+    <a href="signup.html" class="auth-btn">
+        <i class="fas fa-user-plus"></i> Sign Up
+    </a>
+
+    <a href="#" id="logoutLink" class="auth-btn">
+        <i class="fas fa-right-from-bracket"></i> Logout
+    </a>
+</nav>
 </header>
 
 <div class="menu-overlay" id="menuOverlay"></div>
