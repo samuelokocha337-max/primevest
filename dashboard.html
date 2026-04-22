@@ -68,31 +68,35 @@
             transform: scale(1.1);
         }
 
-     .menu-overlay{
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.3s;
-    z-index: 998;
-}
+        .menu-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
 
-.menu-overlay.active{
-    opacity: 1;
-    visibility: visible;
-}
+        .menu-overlay.active { opacity: 1; visibility: visible; }
 
-nav{
-    right: -100%;
-    transition: right 0.4s ease;
-}
+        nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: #0d1421;
+            padding: 100px 30px 40px;
+            transition: right 0.4s ease;
+            z-index: 999;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.6);
+            border-left: 1px solid #334155;
+        }
 
-nav.active{
-    right: 0;
-}
+        nav.active { right: 0; }
 
-       .close-menu {
+        .close-menu {
             position: absolute;
             top: 20px;
             right: 20px;
@@ -364,22 +368,22 @@ nav.active{
 
 <header>
     <div class="logo">PrimeVest</div>
-
     <button class="menu-toggle" id="menuToggle">
         <i class="fas fa-bars"></i>
     </button>
-
-    <nav id="navMenu">
-        <button class="close-menu" id="closeMenu">×</button>
-        <a href="#" id="depositLink"><i class="fas fa-plus-circle"></i> Deposit</a>
-        <a href="myinvestment.html"><i class="fas fa-chart-line"></i> My investment</a>
-        <a href="kyc.html"><i class="fas fa-id-card"></i> KYC</a>
-        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
-        <a href="index.html"><i class="fas fa-home"></i> Home</a>
-    </nav>
+   <nav id="navMenu">
+    <button class="close-menu" id="closeMenu">×</button>
+    <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="#" id="depositLink"><i class="fas fa-plus-circle"></i> Deposit</a>
+    <a href="myinvestment.html"><i class="fas fa-chart-line"></i> My investment</a>
+    <a href="kyc.html"><i class="fas fa-id-card"></i> KYC</a>
+    <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+</nav>
 </header>
 
 <div class="menu-overlay" id="menuOverlay"></div>
+
 <div class="container">
     <div class="overview">
         <div class="card">
@@ -568,7 +572,19 @@ nav.active{
     };
 
     // === Mobile Menu ===
-v
+    document.getElementById('menuToggle').onclick = () => {
+        document.getElementById('navMenu').classList.add('active');
+        document.getElementById('menuOverlay').classList.add('active');
+    };
+
+    const closeMenu = () => {
+        document.getElementById('navMenu').classList.remove('active');
+        document.getElementById('menuOverlay').classList.remove('active');
+    };
+
+    document.getElementById('closeMenu').onclick = closeMenu;
+    document.getElementById('menuOverlay').onclick = closeMenu;
+
     // === Deposit Modal ===
     const depositModal = document.getElementById('depositModal');
     document.getElementById('openDepositModal').onclick = () => depositModal.style.display = 'flex';
@@ -809,4 +825,4 @@ fetch("footer.html")
 </script>
 </body>
 
-</html>
+<
